@@ -1,0 +1,57 @@
+body{
+	color: blue;
+	text-align: center;
+	background: url(../img/patternbg.jpg);
+}
+.content{
+	width: 80%;
+	margin: 0 auto;
+}
+
+h1,h2,h3,h4,h5,h6{
+	color: blue;
+}
+
+.main-menu{
+	padding: 0;
+	margin: 20px 0;
+	font-size: 2em;
+}
+
+.main-menu li{
+	display: inline;
+}
+
+.full-form{
+	width: 90%;
+}
+.container{
+	width: 100%;
+	margin: 0 auto;
+	clear:both;
+}
+.car-container{
+	width: 32%;
+	border: 1px solid red;
+	float:left;
+	background: #eee;
+	margin-right: 10px;
+	margin-bottom: 15px;
+}
+.footer{
+	clear:both;
+}
+.book{
+	background: red;
+	display: inline-block;
+	padding: 10px;
+	color: #fff;
+	text-decoration: none;
+}
+.clear{
+	clear: both;
+}
+.dream_rental{
+	font-size: 2.5em;
+	color: red;
+}

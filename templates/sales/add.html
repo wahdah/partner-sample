@@ -1,0 +1,128 @@
+
+<img src="img/keypass.jpg" alt="">
+	<marquee><h4>Find your dream rental car</h4></marquee>
+	<a href="index.php"><img src="img/joget.gif" height="35px"> Sale Home</a>
+
+    <form action="sale_add.php" method="post">
+        <table align="center" border="1" bordercolor="red" width="100%">
+            <tr>
+                <td width="15%">
+                    <label for="">Pickup Location</label>
+				</td>
+				<td>
+                    <input type="text" size="60" name="pickup_location" value="<?= (isset($pickupLocation) ? $pickupLocation : '') ?>">
+                </td>
+                <td width="15%">
+                    <label for="">Return Location</label>
+				</td>
+				<td>
+                    <input type="text" size="60" name="return_location" value="<?= (isset($returnLocation) ? $returnLocation : '') ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Pickup Date</label>
+				</td>
+				<td>
+                    <input type="text" class="datepicker" size="60" name="pickup_date" value="<?= (isset($_POST['pickup_date']) ? $_POST['pickup_date'] : '') ?>">
+                </td>
+                <td>
+                    <label for="">Return Date</label>
+				</td>
+				<td>
+                    <input type="text" class="datepicker" size="60" name="return_date" value="<?= (isset($_POST['return_date']) ? $_POST['return_date'] : '') ?>">
+                </td>
+			</tr>
+			<tr>
+                <td>
+                    <label for="">Pickup Time</label>
+				</td>
+				<td>
+                    <input type="text" class="timepicker" size="60" name="pickup_time" value="<?= (isset($_POST['pickup_time']) ? $_POST['pickup_time'] : '') ?>">
+                </td>
+                <td>
+                    <label for="">Return Time</label>
+				</td>
+				<td>
+                    <input type="text" class="timepicker" size="60" name="return_time" value="<?= (isset($_POST['return_time']) ? $_POST['return_time'] : '') ?>">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+					<button type="submit">Search</button>
+				</td>
+            </tr>
+        </table>
+        <hr>
+
+		<?php if(isset($vehicle_data) && !empty($vehicle_data)): ?>
+        <div class="container">
+            <?php foreach($vehicle_data['vehicles'] as $v): ?>
+				<?php //pr($v);exit ?>
+            <div class="car-container">
+                <img src="http://order.wahdah.my/media/vehicles/thumb/<?= $v['vehicle']['image'] ?>" alt="">
+                <h2><?= $v['vehicle']['manufacturer']['name'] ?> <?= $v['vehicle']['name'] ?> (<?= $v['vehicle']['transmission'] ?>)<?= $v['vehicle']['engine_size'] / 1000 ?></h2>
+
+                <p>Duration: <?=$v['days'] ?> Day(s)</p>
+                <h3>RM<?= $v['rental_amount'] ?></h3>
+
+                <a href="sale_book.php?vehicleId=<?= $v['id'] ?>" class="book" val="<?= $v['id'] ?>">Book Now</a>
+            </div>
+            <?php endforeach ?>
+            <!-- <div class="car-container">
+                <h2><?php echo $fleet_data['vehicles'][0]['vehicle']['name'] ?></h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati iure ex eveniet neque ipsam aliquam, ratione a laudantium delectus aliquid.</p>
+            </div> -->
+        </div>
+		<?php endif; ?>
+    </form>
+
+	<script type="text/javascript">
+		$('.timepicker').timepicker();
+
+		$(function() {
+		    $('.datepicker').daterangepicker({
+				singleDatePicker: true,
+				autoUpdateInput: false,
+				locale: {
+			    	format: 'YYYY-MM-DD'
+			    },
+			});
+		});
+		$('.datepicker').on('apply.daterangepicker', function(ev, picker) {
+		      $(this).val(picker.startDate.format('YYYY-MM-DD'));
+		  });
+
+		  $('.datepicker').on('cancel.daterangepicker', function(ev, picker) {
+		      $(this).val('');
+		  });
+
+		$('.book').on('click',function(e){
+			e.preventDefault();
+			console.log('id ialah ' + $(this).attr('val'));
+
+			var vehicleId = $(this).attr('val');
+
+			var pickupLocation = $("input[name=pickup_location]").val();
+			// console.log('input lokazion: ' + pickupLocation );
+
+			var returnLocation = $("input[name=return_location]").val();
+			// console.log('input lokazion: ' + pickupLocation );
+
+			var pickupDate = convertToOriginalDate($("input[name=pickup_date]").val());
+			// console.log('input lokazion: ' + pickupDate );
+
+			var returnDate = convertToOriginalDate($("input[name=return_date]").val());
+			// console.log('input lokazion: ' + returnDate );
+
+			var pickupTime = $("input[name=pickup_time]").val();
+			// console.log('input lokazion: ' + pickupTime );
+
+			var returnTime = $("input[name=return_time]").val();
+			// console.log('input lokazion: ' + returnTime );
+
+			var url = 'sale_book.php?partnerVehicleId=' + vehicleId + '&pickupLocation=' + encodeURIComponent(pickupLocation) + '&returnLocation=' + encodeURIComponent(returnLocation) + '&pickupDate=' + encodeURIComponent(pickupDate) + '&returnDate=' + encodeURIComponent(returnDate) + '&pickupTime=' + encodeURIComponent(pickupTime) + '&returnTime=' + encodeURIComponent(returnTime);
+
+			window.location=url;
+		});
+	</script>

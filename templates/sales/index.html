@@ -1,0 +1,34 @@
+<h1>Sales List</h1>
+<a href="sale_add.php"><img src="img/joget.gif" height="35px"> Add Sale</a>
+<table cellpadding=3 cellspacing=3 border=1 width="100%" bordercolor="red">
+    <tr>
+        <th>No</th>
+        <th>Client</th>
+        <th>Rental</th>
+        <th>Sale</th>
+        <th>Action</th>
+    </tr>
+    <?php foreach($data as $d): ?>
+    <?php $i = 1; ?>
+    <?php foreach($d as $e): ?>
+    <tr>
+        <td><?= $i++ ?></td>
+        <td><img src="img/jari.gif" width="60px" height="30px"><?= $e['name']; ?></td>
+        <td>
+            <?= $e['vehicle_name']; ?>
+            <br>
+            <?= $e['fleet']['plate_number']; ?>
+        </td>
+        <td>
+            <?= $e['rental_amount']; ?>
+            <br>
+            <?= ($e['payment_status'] == 1 ? 'Paid' : ''); ?>
+        </td>
+        <td>
+            <a href="edit.php?id=<?= $e['id'] ?>"><img src="img/info.gif" width="30px" height="30px"> Edit</a>
+            <a href="delete.php?id=<?= $e['id'] ?>" onclick="return confirm('Are you sure want to delete this staff?')">Delete <img src="img/api.gif" width="30px" height="30px"></a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    <?php endforeach; ?>
+</table>

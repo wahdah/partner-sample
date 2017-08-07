@@ -1,0 +1,102 @@
+        <table width="100%" border="1px">
+            <tr>
+                <td>
+                    <img src="http://order.wahdah.my/media/vehicles/thumb/<?= $vehicle_data['vehiclePartner']['vehicle']['image'] ?>" alt="">
+                </td>
+                <td>
+                    <h2><?= $vehicle_data['vehiclePartner']['vehicle']['postfix'] ?></h2>
+                    <h3>Duration: <?= $days ?> day(s)</h3>
+                    <h3>
+                        Pickup Location: <?= $pickupLocation ?>
+                        <br>
+                        <?= $pickupDate->format('d-m-Y'); ?>, <?= date('H.ia', strtotime($pickupTime)) ?>
+                    </h3>
+                    <h3>
+                        Return Location: <?= $returnLocation ?>
+                        <br>
+                        <?= $returnDate->format('d-m-Y') ?>, <?= date('H.ia', strtotime($returnTime)) ?>
+                    </h3>
+                    <h3>RM: <?= $rental_amount ?> </h3>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <h3>Summary of Rental</h3>
+        <table align="center" border="1" bordercolor="red" width="100%">
+            <tr>
+                <th>Item </th>
+                <th>Amount(MYR)</th>
+            </tr>
+            <tr>
+                <td>Rental</td>
+                <td><?= $rental_amount ?> </td>
+            </tr>
+            <tr>
+                <td>Total Amount</td>
+                <td><?= $rental_amount ?> </td>
+            </tr>
+            <tr>
+                <td>Rounding</td>
+                <td><?= $rounding ?></td>
+            </tr>
+            <tr>
+                <td>Pickup Return Fee</td>
+                <td><?= $pickupReturnFee ?></td>
+            </tr>
+            <tr>
+                <td>Refundable Deposit</td>
+                <td><?= $depositAmount ?></td>
+            </tr>
+            <tr>
+                <td>Grand Total</td>
+                <td><?= $rental_amount + $depositAmount + $pickupReturnFee + $addOnAmount + $taxAmount ?></td>
+            </tr>
+        </table>
+        <hr class="clear">
+        <form action="sale_book.php" method="POST">
+            <table align="center" border="1" bordercolor="red" width="100%">
+                <tr>
+                    <td width="30%">Name</td>
+                    <td><input type="text" size="100" name="name"></td>
+                </tr>
+                <tr>
+                    <td width="30%">Email</td>
+                    <td><input type="text" size="100" name="email"></td>
+                </tr>
+                <tr>
+                    <td width="30%">Address</td>
+                    <td><input type="text" size="100" name="address"></td>
+                </tr>
+                <tr>
+                    <td width="30%">IC Number</td>
+                    <td><input type="text" size="100" name="ic_no"></td>
+                </tr>
+                <tr>
+                    <td width="30%">Mobile Number</td>
+                    <td><input type="text" size="100" name="mobile_number"></td>
+                </tr>
+                <tr>
+                    <td width="30%">Note</td>
+                    <td><input type="text" size="100" name="note"></td>
+                </tr>
+            </table>
+            <hr>
+            <input type="hidden" name="addon_amount" value="<?= $addOnAmount ?>">
+            <input type="hidden" name="deposit_amount" value="<?= $depositAmount ?>">
+            <input type="hidden" name="discount_amount" value="<?= $discountAmount ?>">
+            <input type="hidden" name="end_date" value="<?= $returnDate->format('Y-m-d') ?>">
+            <input type="hidden" name="end_time" value="<?= date('H:i:s', strtotime($returnTime)) ?>">
+            <input type="hidden" name="pickup_location" value="<?= $pickupLocation ?>">
+            <input type="hidden" name="pickup_return_fee" value="<?= $pickupReturnFee ?>">
+            <input type="hidden" name="return_location" value="<?= $returnLocation ?>">
+            <input type="hidden" name="rental_amount" value="<?= $rental_amount ?>">
+            <input type="hidden" name="rounding" value="<?= $rounding ?>">
+            <input type="hidden" name="start_date" value="<?= $pickupDate->format('Y-m-d') ?>">
+            <input type="hidden" name="start_time" value="<?= date('H:i:s', strtotime($pickupTime)) ?>">
+            <input type="hidden" name="tax_amount" value="<?= $taxAmount ?>">
+            <input type="hidden" name="total_amount_before_tax" value="0">
+            <input type="hidden" name="total_amount" value="<?= $rental_amount ?>">
+            <input type="hidden" name="vehicle_id" value="<?= $vehicle_data['vehiclePartner']['vehicle']['id'] ?>">
+
+            <button type="submit">Checkout</button>
+        </form>
